@@ -1,9 +1,8 @@
-module SIMU
+module Simu
 using Distributions, Random, Statistics, Octavian, LinearAlgebra
 
-include("quick-simu.jl")
-include("sim-qtl.jl")
+include("local-simu.jl")
 
-export quick_g, simQTL, simPtQTL
+export gtqs, simQTL, simPtQTL
 
 end

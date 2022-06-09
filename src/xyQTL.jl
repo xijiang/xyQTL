@@ -1,5 +1,7 @@
 module xyQTL
 
-greet() = print("Hello World!")
+include("simu/simu.jl")
+
+using .Simu
 
 end # module

@@ -1,4 +1,26 @@
 """
+    function gtqs(nlc, nid; maf = .2, α = .75, β = .75)
+A quick way to simulate genotypes of `nID`, each has `nLoci` SNP.
+Allele frequencies are sampled from a `Beta(α, β)`,
+such that the frequencies have a U-shaped distribution.
+The parameters for the Beta distribition here are, by default, `α = β = 0.75`.
+
+This is a quick and simple simulation. No LD information was considered.
+"""
+function gtqs(nid, nlc; maf = .2, α = .75, β = 0.75)
+    (maf <= 0 || maf >= .5) && error("maf $maf not in (0, 0.5)")
+    gt = zeros(Int8, nid, nlc)
+    for iic in 1:nlc
+        p = 0
+        while p <= maf || p >= 1 - maf
+            p = rand(Beta(α, β))
+        end
+        rand!(Binomial(2, p), view(gt, :, iic))
+    end
+    gt
+end
+
+"""
     function simQTL(gt, nqtl...; d = Laplace(), ϵ = 1e-5, norm = true)
 ## Description
 Given genotype `gt` of nLocus by nID, this function sample `nqtl` loci as QTL.
